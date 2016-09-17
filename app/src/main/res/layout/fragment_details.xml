@@ -1,0 +1,133 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mohamed.movieapp.DetailsFragment">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:background="@color/material_deep_teal_500"
+        />
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="150dp"
+        android:layout_height="220dp"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/title"
+        android:layout_margin="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <TextView
+        android:id="@+id/reasledate"
+        android:layout_below="@+id/title"
+        android:layout_toRightOf="@+id/poster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/average"
+        android:layout_below="@+id/reasledate"
+        android:layout_alignLeft="@+id/reasledate"
+        android:layout_alignStart="@+id/reasledate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/overview"
+        android:layout_below="@+id/poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="15dp"
+        />
+
+<CheckBox
+    android:id="@+id/favourite"
+    android:layout_below="@+id/average"
+    android:layout_width="wrap_content"
+    android:layout_toRightOf="@+id/poster"
+    android:layout_height="wrap_content"
+    android:text="MARK AS FAVOURITE"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="10dp"
+    android:textSize="15sp"
+    android:padding="10dp"
+    android:layout_alignLeft="@+id/reasledate"
+    android:background="@color/material_deep_teal_200"
+    android:checked="false" />
+
+    <TextView
+        android:id="@+id/trailer_text"
+        android:layout_below="@+id/overview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Trailers"
+        android:padding="10dp"
+        android:textSize="25sp"
+        android:background="@color/material_deep_teal_500"
+        android:textColor="#ffffff"
+        />
+    <ListView
+        android:id="@+id/trailer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trailer_text"
+ />
+    <TextView
+        android:id="@+id/review_text"
+        android:layout_below="@+id/trailer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reviews"
+        android:padding="10dp"
+        android:textSize="25sp"
+        android:background="@color/material_deep_teal_500"
+        android:textColor="#ffffff"
+        />
+    <TextView
+        android:id="@+id/review"
+        android:layout_below="@+id/review_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        />
+
+</RelativeLayout>
+</ScrollView>
