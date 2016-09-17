@@ -10,18 +10,19 @@ import android.net.NetworkInfo;
 public class ConnectedToInternet {
 
     public boolean isConnectedToInternet(Context getApplicationContext){
-        ConnectivityManager connectivity = (ConnectivityManager)getApplicationContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
+        NetworkInfo info = ((ConnectivityManager) getApplicationContext.getSystemService(Context.CONNECTIVITY_SERVICE))
+                .getActiveNetworkInfo();
+        if (info == null || !info.isConnected())
         {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null)
-                for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
-                        return true;
-                    }
-
+            return false;
         }
-        return false;
+        if (info.isRoaming()) {
+            // here is the roaming option you can change it if you want to
+            // disable internet while roaming, just return false
+            return true;
+        }
+
+        return true;
+
     }
 }

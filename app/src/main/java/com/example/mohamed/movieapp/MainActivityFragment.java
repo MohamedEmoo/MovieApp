@@ -20,42 +20,27 @@ import java.util.ArrayList;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment implements On_Get_Data {
+    public  static GridView gridview;
+    public  static Boolean favorite=false;
     @Override
     public void onResume() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("move_sort_chosen", Activity.MODE_PRIVATE);
-        String sortPref = sharedPreferences.getString(getString(R.string.pref_movies_key), getString(R.string.pref_popular));
-
-        if(sortPref.equals(getString(R.string.pref_popular)))
-        {
-            FetchMovieTask task = new FetchMovieTask();
-            task.setListener(this);
-            task.execute(getString(R.string.pref_popular));
-        }
-        else if(sortPref.equals(getString(R.string.pref_top_rated)))
-        {
-            FetchMovieTask task = new FetchMovieTask();
-            task.setListener(this);
-            task.execute(getString(R.string.pref_top_rated));
-        }
-        else if(sortPref.equals(getString(R.string.pref_Favorite)))
-        {
-            getMoviesFromDatabase();
-        }
+        setSharedPreferences();
         super.onResume();
     }
 
-    String order = "popular";
+    ConnectedToInternet internet;
     On_Get_Data Selectedmovie;
 
     public MainActivityFragment() {
     }
 
-    GridView gridview;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        favorite=false;
     }
 
     @Override
@@ -63,26 +48,16 @@ public class MainActivityFragment extends Fragment implements On_Get_Data {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_activity_fragment, container, false);
         gridview = (GridView) view.findViewById(R.id.gridView);
-
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("move_sort_chosen", Activity.MODE_PRIVATE);
-        String sortPref = sharedPreferences.getString(getString(R.string.pref_movies_key), getString(R.string.pref_popular));
-
-        if(sortPref.equals(getString(R.string.pref_popular)))
+        internet = new ConnectedToInternet();
+//        if (internet.isConnectedToInternet(getContext().getApplicationContext()))
+  //      {
+            setSharedPreferences();
+    //    }
+      /*  else
         {
-            FetchMovieTask task = new FetchMovieTask();
-            task.setListener(this);
-            task.execute(getString(R.string.pref_popular));
-        }
-        else if(sortPref.equals(getString(R.string.pref_top_rated)))
-        {
-            FetchMovieTask task = new FetchMovieTask();
-            task.setListener(this);
-            task.execute(getString(R.string.pref_top_rated));
-        }
-        else if(sortPref.equals(getString(R.string.pref_Favorite)))
-        {
+            Toast.makeText(getContext().getApplicationContext(),"Sorry,no internet connectivty" , Toast.LENGTH_SHORT).show();
             getMoviesFromDatabase();
-        }
+        }*/
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,8 +75,29 @@ public class MainActivityFragment extends Fragment implements On_Get_Data {
         });
         return view;
     }
+    private  void setSharedPreferences()
+    {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("move_sort_chosen", Activity.MODE_PRIVATE);
+        String sortPref = sharedPreferences.getString(getString(R.string.pref_movies_key), getString(R.string.pref_popular));
 
-    private void getMoviesFromDatabase()
+        if(sortPref.equals(getString(R.string.pref_popular)))
+        {
+            FetchMovieTask task = new FetchMovieTask();
+            task.setListener(this);
+            task.execute(getString(R.string.pref_popular));
+        }
+        else if(sortPref.equals(getString(R.string.pref_top_rated)))
+        {
+            FetchMovieTask task = new FetchMovieTask();
+            task.setListener(this);
+            task.execute(getString(R.string.pref_top_rated));
+        }
+        else if(sortPref.equals(getString(R.string.pref_Favorite)))
+        {
+            getMoviesFromDatabase();
+        }
+    }
+    public void getMoviesFromDatabase()
     {
         Database database;
         Movie movie;
@@ -134,6 +130,8 @@ public class MainActivityFragment extends Fragment implements On_Get_Data {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_popular)
         {
+            favorite=false;
+
             FetchMovieTask task = new FetchMovieTask();
             task.setListener(this);
             task.execute(getString(R.string.pref_popular));
@@ -142,6 +140,8 @@ public class MainActivityFragment extends Fragment implements On_Get_Data {
         }
         if(id== R.id.action_top_rated)
         {
+            favorite=false;
+
             FetchMovieTask task = new FetchMovieTask();
             task.setListener(this);
             task.execute(getString(R.string.pref_top_rated));
@@ -150,6 +150,7 @@ public class MainActivityFragment extends Fragment implements On_Get_Data {
         }
         if (id==R.id.action_Favorite)
         {
+            favorite=true;
             getMoviesFromDatabase();
             prefEditor.putString(getString(R.string.pref_movies_key), getString(R.string.pref_Favorite));
             prefEditor.commit();

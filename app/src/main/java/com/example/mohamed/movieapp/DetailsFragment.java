@@ -1,6 +1,7 @@
 package com.example.mohamed.movieapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -79,10 +80,34 @@ public class DetailsFragment extends Fragment {
                     {
                         database.Add_Movie(movie);
                         Toast.makeText(getContext().getApplicationContext(),Title+ " Is Added" , Toast.LENGTH_SHORT).show();
+                        if(MainActivityFragment.favorite==true) {
+                            Movie movie;
+                            ArrayList<Movie> movies = new ArrayList<>();
+                            Cursor cursor = database.fetchall_Movie();
+                            while (!cursor.isAfterLast()) {
+                                movie = new Movie(cursor.getString(5), cursor.getString(4), cursor.getString(2), cursor.getString(1), cursor.getString(0), cursor.getString(3));
+                                movies.add(movie);
+                                cursor.moveToNext();
+                            }
+                            MainActivityFragment.gridview.setAdapter(new CustomAdapter(getActivity().getApplicationContext(), movies));
+                        }
                     }
                     else if(!checkBox.isChecked())
                     {
+
                         database.deleteMovie(Title);
+                        Toast.makeText(getContext().getApplicationContext(),Title+ " Is Deleted" , Toast.LENGTH_SHORT).show();
+                        if(MainActivityFragment.favorite==true) {
+                            Movie movie;
+                            ArrayList<Movie> movies = new ArrayList<>();
+                            Cursor cursor = database.fetchall_Movie();
+                            while (!cursor.isAfterLast()) {
+                                movie = new Movie(cursor.getString(5), cursor.getString(4), cursor.getString(2), cursor.getString(1), cursor.getString(0), cursor.getString(3));
+                                movies.add(movie);
+                                cursor.moveToNext();
+                            }
+                            MainActivityFragment.gridview.setAdapter(new CustomAdapter(getActivity().getApplicationContext(), movies));
+                        }
                     }
                 }
             });
@@ -91,9 +116,6 @@ public class DetailsFragment extends Fragment {
                 if(database.check(Title))
                 checkBox.setChecked(true);
             }
-
-
-
 
             title.setText(Title);
             reasledate.setText(release_date);
@@ -193,6 +215,7 @@ public class DetailsFragment extends Fragment {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Link)));
                     }
                 });
+
                 trailer_list.setAdapter(arrayAdapter);
               /*  View listitem=null;
                 listitem = arrayAdapter.getView(0, listitem, trailer_list);
@@ -203,11 +226,12 @@ public class DetailsFragment extends Fragment {
                 trailer_list.setLayoutParams(params);
 */
                 //setListViewHeightBasedOnChildren(trailer_list);
-                int h=calculateHeight(trailer_list);
-                Log.d("list", "listitem height = " +h);
+              //  int h=calculateHeight(trailer_list);
+               // Log.d("list", "listitem height = " +h);
                 ViewGroup.LayoutParams params=trailer_list.getLayoutParams();
-                params.height=h*(arrayAdapter.getCount());
+                params.height=130*(arrayAdapter.getCount());
                 trailer_list.setLayoutParams(params);
+
             }
 
         }

@@ -102,9 +102,9 @@
     <ListView
         android:id="@+id/trailer_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/trailer_text"
- />
+        android:entries="@array/trailers"/>
     <TextView
         android:id="@+id/review_text"
         android:layout_below="@+id/trailer_list"
@@ -127,6 +127,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_margin="5dp"
+        android:text="No Reviews"
         />
 
 </RelativeLayout>
