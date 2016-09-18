@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class CustomAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<Movie> movies;
+    private ArrayList<Movie> movies=null;
     public CustomAdapter(Context mContext, ArrayList<Movie> movies) {
         this.mContext = mContext;
         this.movies = movies;
@@ -29,7 +29,9 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if(movies!=null)
         return movies.size();
+        return 0;
     }
 
     @Override
@@ -45,8 +47,6 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
-        // if it's not recycled, initialize some attributes
-        // imageView = new ImageView(mContext);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
